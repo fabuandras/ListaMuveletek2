@@ -1,6 +1,7 @@
 import { emberekLISTA } from "./adat.js";
 import { megjelenit, tablazatLetrehoz } from "./fuggvenyek.js";
-import { rendez, szures } from "./adatKezelo.js";
+import { rendez, szures, torol } from "./adatKezelo.js";
+import { sorBeszur } from "./urlapKezelo.js";
     /*
     jelenisuk meg az adatainkat egy tablazatban az adatk divben
     az urlap div-ben legyen egy urlap, amivel ilyen adatokat tudunk a tablazatba beletenni
@@ -26,16 +27,19 @@ import { rendez, szures } from "./adatKezelo.js";
     6. torol(lista, index)
         torli a lista adott sorat
         minden sor mellett lesz egy torol gomb, amivel megkapjuk az adott sor indexet es meghivodik a torol fuggveny
-    
     */
+   
     let rIrany = 1;
     init(emberekLISTA);
     szuresNevSzerint();
+    torolesemeny()
+    sorBeszur(emberekLISTA)
 
-    function init(lista){
+    export function init(lista){
         var txt = tablazatLetrehoz(lista);
         megjelenit(txt);
         rendezesEsemeny();
+        torolesemeny()
     }
 
     function szuresNevSzerint(){
@@ -58,6 +62,16 @@ import { rendez, szures } from "./adatKezelo.js";
             console.log(lista);
             init(lista);
             rIrany*=-1;
+        })
+    }
+
+    function torolesemeny() {
+        const torolELEM = $(".torol")
+        torolELEM.on("click", function (event) {
+            let index = event.target.id;
+            // ez váltotta ki az eseményt
+            const LISTA= torol(emberekLISTA,index)
+            init(LISTA)
         })
     }
 
